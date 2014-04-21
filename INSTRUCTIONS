@@ -1,0 +1,37 @@
+1. Download a copy of Arch Linux for Arm Processors
+2. dd bs=1M if=arch_arm.img of=/dev/sdX (where sdX is the SD card)
+3. Use parted or gparted to expand the filesystem on the SD card to fill the space
+4. Login to the pi: It's initial address is alarmpi
+   -- ssh root@alarmpi #password is root
+5. pacman -Syu #update the system
+6. passwd #Change the root user password
+7. adduser -m -g <group> -s <shell> <username>  # Install any shells you want before this
+8. pacman -S sudo vim emacs git
+9. Setup user environment (.bashrc, aliases, etc)
+10. edit /etc/hostname
+-- Setup the wifi
+11. install hostapd fakeroot binutils patch make gcc
+12. wget and install https://aur.archlinux.org/packages/ud/udhcp/udhcp.tar.gz
+12. edit /etc/hostapd/hostapd.conf # ssid, wpa_passphrase
+13. systemctl enable hostapd.service # Start it too
+14. edit /etc/udhcpd.conf
+    start 192.168.7.2
+    end 192.168.7.254
+    interface wlan0
+    remaining yes
+    opt dns 8.8.8.8 4.2.2.2
+    opt subnet 255.255.255.0
+    opt router 192.168.7.1
+    opt lease 864000
+15. edit /etc/conf.d/network@wlan0
+    address=192.168.7.1
+    netmask=24
+    broadcast=192.168.7.255
+16. Add systemd unit file -- give here
+17. systemctl enable network@wlan0.service # and start    
+**18. fix /usr/lib/systemd/system/udhcpd.service (/usr/sbin to /usr/bin) ... not working?
+
+** Okay, nvm with udhcpd, switching to dhcpd
+19. Install dhcpd
+20. edit /etc/dhcpd.conf
+21. 
