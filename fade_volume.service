@@ -1,0 +1,11 @@
+[Unit]
+Description=fade_volume
+Wants=mpd.target
+After=mpd.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/fade_volume
+
+[Install]
+WantedBy=multi-user.target

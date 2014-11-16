@@ -1,0 +1,31 @@
+#!/usr/bin/python
+
+import os
+import time
+
+def main():
+    # Check if mpd is alive
+    mpd_stat = int(os.popen('pgrep mpd | wc -l').read())
+    if mpd_stat == 0:
+        return
+    # Check if mpd is playing
+    mpd_playing = int(os.popen('mpc status | grep playing | wc -l').read())
+    # Check if queue is empty
+    mpd_queue = int(os.popen('mpc playlist | wc -l').read())
+
+    # Load default playlist if queue is empty
+    mpd_playlists = (os.popen('mpc lsplaylists').read()).split()
+    if 'default' in mpd_playlists and mpd_queue is 0:
+        os.system('mpc load default >/dev/null')
+        os.system('mpc random on >/dev/null')
+        os.system('mpc repeat on >/dev/null')
+
+    # Tell mpd to begin playing if not
+    if mpd_playing is 0:
+        os.system('mpc play >/dev/null')
+
+if __name__ == '__main__':
+    timer = 5                             #second
+    while True:
+        main()
+        time.sleep(timer)

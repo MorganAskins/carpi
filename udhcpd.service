@@ -1,0 +1,15 @@
+[Unit]
+Description=udhcpd
+Requires=sys-subsystem-net-devices-wlan0.device
+After=sys-subsystem-net-devices-wlan0.device
+After=network.target
+After=hostapd.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/sleep 10s
+ExecStart=/usr/bin/udhcpd /etc/udhcpd.conf
+
+[Install]
+WantedBy=multi-user.target

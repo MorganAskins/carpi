@@ -1,0 +1,22 @@
+#!/bin/bash
+# Fade in the volume using mpc when mpd is active
+
+run_once=true
+
+fade_that_shit () 
+{
+  for i in $(seq 1 80)
+  do
+    mpc volume $((i*1)) >/dev/null
+    sleep 0.1s
+  done
+}
+
+while $run_once; do
+  if [ -n "$(pgrep mpd)" ]; then
+    fade_that_shit
+    run_once=false
+  fi
+done
+
+exit 0

@@ -1,0 +1,13 @@
+[Unit]
+Description=Car Pi Keep Playing
+Wants=mpd.target
+After=mpd.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/usr/bin/carpi_alive
+
+[Install]
+WantedBy=multi-user.target
